@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaShoppingCart, FaSearch } from "react-icons/fa";
+import { FaShoppingCart, FaSearch, FaUser } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { Product } from "../components/List";
 import Link from "next/link";
@@ -24,7 +24,7 @@ const CheckProduct: React.FC = () => {
 
   const handlePurchase = (product: Product) => {
     router.push({
-      pathname: "/Purchase",
+      pathname: "/PurchaseLogged",
       query: { id: product.id, name: product.name, price: product.price },
     });
   };
@@ -44,7 +44,7 @@ const CheckProduct: React.FC = () => {
               <FaSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
             <Link
-              href="/ProductsPage"
+              href="/ProductsPageLogged"
               className="text-gray-700 hover:text-blue-500"
             >
               Products
@@ -53,9 +53,9 @@ const CheckProduct: React.FC = () => {
               Cart
               <span className="text-gray-500">({cartProducts.length})</span>
             </a>
-            <Link href="/" className="text-gray-700 hover:text-blue-500">
-              Home
-            </Link>
+            <p>
+              <FaUser className="cursor-pointer" />
+            </p>
           </div>
         </div>
         {cartProducts.length === 0 ? (

@@ -17,9 +17,11 @@ const LandingPage: React.FC = () => {
               Explore Products
             </button>
           </Link>
-          <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-            Sign Up
-          </button>
+          <Link href="/SignUp">
+            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+              Sign Up
+            </button>
+          </Link>
         </div>
       </div>
     </div>

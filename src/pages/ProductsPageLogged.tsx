@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import "../globals.css";
 import { mockProducts } from "../components/List";
 import { Product } from "../components/List";
@@ -9,17 +9,27 @@ const ProductsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [cart, setCart] = useState<Product[]>([]);
   const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
     }
+
+    fetchUserInfo();
   }, []);
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+
+  const fetchUserInfo = () => {
+    const userData = localStorage.getItem("userData");
+    if (userData) {
+      setUserInfo(JSON.parse(userData));
+    }
+  };
 
   const addToCart = (product: Product) => {
     const isProductInCart = cart.some((item) => item.id === product.id);
@@ -62,7 +72,7 @@ const ProductsPage: React.FC = () => {
               </Link>
               <Link
                 href={{
-                  pathname: "/CheckProduct",
+                  pathname: "/CheckProductLogged",
                   query: { cart: JSON.stringify(cart) },
                 }}
                 className="text-gray-700 hover:text-blue-500"
@@ -70,13 +80,12 @@ const ProductsPage: React.FC = () => {
                 Cart
                 <span className="text-gray-500">({cart.length})</span>
               </Link>
-              <Link href="/" className="text-gray-700 hover:text-blue-500">
-                Home
-              </Link>
+              <p onClick={fetchUserInfo}>
+                <FaUser className="cursor-pointer" />
+              </p>
             </div>
           </div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {filteredProducts.map((product) => (
             <div
@@ -131,6 +140,39 @@ const ProductsPage: React.FC = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg opacity-100 transition-opacity duration-500">
             <p className="text-lg text-center font-semibold">Added</p>
+          </div>
+        </div>
+      )}
+      {userInfo && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-4 rounded-lg shadow-lg">
+            <p className="text-lg font-semibold">User Information</p>
+            <p>
+              Username:{" "}
+              <span className="font-semibold">{userInfo.username}</span>
+            </p>
+            <p>
+              Email: <span className="font-semibold">{userInfo.email}</span>
+            </p>
+            <p>
+              Birthdate:{" "}
+              <span className="font-semibold">{userInfo.birthdate}</span>
+            </p>
+            <p>
+              Balance: <span className="font-semibold">20000$</span>
+            </p>
+            <button
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              onClick={() => setUserInfo(null)}
+            >
+              Close
+            </button>
+            <button
+              className="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded ml-2"
+              onClick={() => setUserInfo(null)}
+            >
+              <Link href="/">Log Out</Link>
+            </button>
           </div>
         </div>
       )}
