@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaShoppingCart } from "react-icons/fa";
-import "../globals.css";
 import { mockProducts } from "../components/List";
 import { Product } from "../components/List";
 import Link from "next/link";
