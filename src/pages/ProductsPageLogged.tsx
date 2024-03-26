@@ -3,7 +3,6 @@ import { FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import { mockProducts } from "../components/List";
 import { Product } from "../components/List";
 import Link from "next/link";
-import "../globals.css";
 
 const ProductsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
